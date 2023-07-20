@@ -6,6 +6,24 @@ import OutputVersionDropdown from "./OutputVersionDropdown";
 import UnsavedChangesMenu from "../output/UnsavedChangesMenu";
 import Head from "next/head";
 
+/**
+ * Layout Component 
+ * ---
+ * Layout for the application. Will return the sidebar 
+ * on the left and the children components.
+ * Uses NavigationLink and SidebarLabel component 
+ * 
+ * --------------------
+ * | Project          |
+ * | Tasks            | 
+ * | Users            | 
+ * | Categories       | 
+ * --------------------
+ * | Project Name     |
+ * | Solution Version | 
+ * | Solution Details |
+ * --------------------
+ */
 export default function Layout({ children }) {
   const [projectData, dispatch, loading] = useProjectData();
 
@@ -99,6 +117,17 @@ export default function Layout({ children }) {
   );
 }
 
+/**
+ * NavigationLink component
+ * ---
+ * Link in the sidebar
+ * --------------------
+ * | Project          |
+ * | Tasks            | 
+ * | Users            | 
+ * | Categories       | 
+ * --------------------
+ */
 function NavigationLink({ children, badge, href, equals = false }) {
   const router = useRouter();
 
@@ -132,6 +161,15 @@ function NavigationLink({ children, badge, href, equals = false }) {
   );
 }
 
+/**
+ * SidebarLabel
+ * ---
+ * label in the sidebar
+ * --------------------
+ * | Project Name     |
+ * | Solution Version | 
+ * --------------------
+ */
 function SidebarLabel({ children }) {
   return (
     <span className={"text-xs tracking-wide text-slate-400"}>{children}</span>

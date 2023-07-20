@@ -7,34 +7,53 @@ import { useRef, useState } from "react";
 import { useRouter } from "next/router";
 import KPI from "../components/ui/KPI";
 
+/**
+ * Home page for the application.
+ *
+ * @returns 
+ * For a new project renders a form containing:
+ * - fields for the project name
+ * - button for creating the project
+ * - an option to import an existing project.
+ *
+ * For an existing project displays:
+ * - project detail, including project name, number of tasks, users, categories, and solutions.
+ * - button to export the current project as a JSON file
+ * - button to delete the project
+ */
 export default function Home() {
   const router = useRouter();
+
+  // For retrieving project data
   const [projectData, dispatch, loading] = useProjectData();
 
   const [projectName, setProjectName] = useState("");
 
   const [showImport, setShowImport] = useState(false);
+  // reference to the import file input field
   const fileInputRef = useRef();
 
+  // Loading and Data Validity Check
   if (loading || !projectData) {
     return null;
   }
 
+  // Event handler function, triggered when a user attempts to import a project.
   const handleImportProject = (e) => {
     e.preventDefault();
 
-    if (
-      !fileInputRef.current.files ||
-      fileInputRef.current.files.length === 0
-    ) {
+    // Selected file check
+    if ( !fileInputRef.current.files || fileInputRef.current.files.length === 0) {
       return;
     }
 
     const reader = new FileReader();
+    // Reads a file from an input field
     reader.readAsText(fileInputRef.current.files[0]);
-
+    // Saves it to local storage
     reader.onload = () => {
       window.localStorage.setItem("workload_project_data", reader.result);
+      // Reloads the page
       router.reload();
     };
 
@@ -43,6 +62,7 @@ export default function Home() {
     };
   };
 
+  // For a new project, renders a form to create a new project or import an existing one.
   if (projectData.id === -1) {
     // new project
     return (
@@ -143,6 +163,8 @@ export default function Home() {
     );
   }
 
+  // For existing project displays number of tasks, users, categories, and solutions.
+  // with buttons to export the current project as a JSON file and to delete the project.
   return (
     <div>
       <div>

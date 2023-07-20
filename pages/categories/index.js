@@ -3,6 +3,14 @@ import Link from "next/link";
 import TableHeader from "../../components/ui/TableHeader";
 import TableData from "../../components/ui/TableData";
 
+/**
+ * Categories page under /task-allocation/categories
+ * 
+ * @returns 
+ *  - A New Category button 
+ *  - a table with category information
+ *    : message saying that there are no categories
+ */
 export default function CategoriesPage() {
   const [projectData, dispatch, loading] = useProjectData();
 
@@ -20,10 +28,12 @@ export default function CategoriesPage() {
     });
   };
 
+  // renders null if project data is loading
   if (loading) {
     return null;
   }
-
+  // If there are categories in the project data, displays a table with category information
+  // otherwise displays a message saying that there are no categories.
   return (
     <div>
       <div>
@@ -76,6 +86,9 @@ export default function CategoriesPage() {
   );
 }
 
+// Row component
+// > rendering each row in the table of categories
+// > | category.name | number of tasks | Edit | Duplicate | Remove |
 function CategoryRow({ category, tasks, handleRemove, handleDuplicate }) {
   const numTasks = tasks.filter((t) => t.category === category.id).length;
 

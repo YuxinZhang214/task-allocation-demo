@@ -20,6 +20,7 @@ export default function OutputPage() {
   useEffect(() => {
     const wait = async () => {
       let timer = setInterval(async () => {
+        // makes a POST request to the /server/get every 3000ms
         const res = await axios.post(
           GET_URL,
           {

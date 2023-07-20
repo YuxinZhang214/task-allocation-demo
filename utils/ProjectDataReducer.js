@@ -17,6 +17,7 @@ export default function projectDataReducer(state, action) {
 
   // some actions do not elicit making a change and hence are not included
 
+  // If the action type is not one that does not imply unsaved changes
   if (
     !ACTIONS_NOT_ELICITING_UNSAVED_CHANGES.includes(action.type) &&
     result.output_history &&
